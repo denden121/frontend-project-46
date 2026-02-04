@@ -1,5 +1,5 @@
 import sortBy from 'lodash/sortBy.js';
-import parseFile from './src/parser.js';
+import parseFile from './src/parsers/index.js';
 
 const formatValue = (value) =>
   (typeof value === 'string' ? value : String(value));

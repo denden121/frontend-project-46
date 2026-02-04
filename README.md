@@ -8,5 +8,4 @@
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=denden121_frontend-project-46&metric=coverage)](https://sonarcloud.io/summary/new_code?project=denden121_frontend-project-46)
 
 
-Пример работы утилиты — сравнение двух JSON-файлов:
-[asciinema](https://asciinema.org/a/s2Q59nLGrsr176DK)
+Пример работы утилиты: [asciinema](https://asciinema.org/a/y6OeCUmhkiIcWYx4)
