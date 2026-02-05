@@ -1,5 +1,5 @@
 
-const nodeToJson = (node) => {
+const nodeToJson = node => {
   const base = { key: node.key, type: node.type }
 
   switch (node.type) {
