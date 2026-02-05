@@ -15,7 +15,7 @@ describe('genDiff', () => {
     - timeout: 50
     + timeout: 20
     + verbose: true
-}`;
+  }`;
 
   test('сравнивает два плоских JSON-файла и возвращает строку с дифом', () => {
     const filepath1 = getFixturePath('file1.json');
