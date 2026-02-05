@@ -11,7 +11,8 @@ export default function parseFile(filepath) {
   let content
   try {
     content = fs.readFileSync(absolutePath, { encoding: 'utf-8' })
-  } catch (err) {
+  }
+  catch (err) {
     if (err.code === 'ENOENT') {
       throw new Error(`File not found: ${absolutePath}`)
     }

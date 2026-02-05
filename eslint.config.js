@@ -6,7 +6,7 @@ import globals from 'globals'
 export default [
   js.configs.recommended,
   {
-    plugins: { import: importPlugin, '@stylistic': stylistic },
+    plugins: { 'import': importPlugin, '@stylistic': stylistic },
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'module',
@@ -15,11 +15,11 @@ export default [
     rules: {
       ...importPlugin.configs.recommended.rules,
       '@stylistic/semi': ['error', 'never'],
-      '@stylistic/arrow-parens': ['error', 'as-needed'],
+      '@stylistic/arrow-parens': ['error', 'always'],
       '@stylistic/quotes': ['error', 'single'],
-      '@stylistic/brace-style': ['error', '1tbs'],
+      '@stylistic/brace-style': ['error', 'stroustrup'],
       '@stylistic/no-multiple-empty-lines': ['error', { max: 1 }],
-      '@stylistic/quote-props': ['error', 'as-needed'],
+      '@stylistic/quote-props': ['error', 'consistent'],
     },
   },
   {
