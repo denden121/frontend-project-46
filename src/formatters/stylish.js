@@ -1,54 +1,56 @@
-const indent = (depth) => ' '.repeat(2 * depth);
+const getMarkerIndent = (level) => ' '.repeat(level * 4 - 2);
+const getPlainIndent = (level) => ' '.repeat(level * 4);
 
 const isObject = (value) =>
   typeof value === 'object' && value !== null;
 
-const stringifyIndent = (depth) => ' '.repeat(4 * (depth - 1));
-const stringifyBracketIndent = (depth) => ' '.repeat(4 * Math.max(0, depth - 2));
+const stringifyIndent = (level) => ' '.repeat((level + 1) * 4);
+const stringifyBracketIndent = (level) => ' '.repeat(level * 4);
 
-const stringify = (value, depth) => {
+const stringify = (value, level) => {
   if (!isObject(value)) {
     return typeof value === 'string' ? value : String(value);
   }
 
-  const currentIndent = stringifyIndent(depth);
-  const bracketIndent = stringifyBracketIndent(depth);
+  const currentIndent = stringifyIndent(level);
+  const bracketIndent = stringifyBracketIndent(level);
 
   const lines = Object
     .entries(value)
     .map(
-      ([key, val]) => `${currentIndent}${key}: ${stringify(val, depth + 1)}`,
+      ([key, val]) => `${currentIndent}${key}: ${stringify(val, level + 1)}`,
     );
 
   return ['{', ...lines, `${bracketIndent}}`].join('\n');
 };
 
-const formatNode = (node, depth) => {
-  const prefix = indent(depth);
+const formatNode = (node, level) => {
+  const markerIndent = getMarkerIndent(level);
+  const plainIndent = getPlainIndent(level);
   switch (node.type) {
     case 'added':
-      return `${prefix}+ ${node.key}: ${stringify(node.value, depth + 2)}`;
+      return `${markerIndent}+ ${node.key}: ${stringify(node.value, level)}`;
     case 'removed':
-      return `${prefix}- ${node.key}: ${stringify(node.value, depth + 2)}`;
+      return `${markerIndent}- ${node.key}: ${stringify(node.value, level)}`;
     case 'updated':
       return [
-        `${prefix}- ${node.key}: ${stringify(node.oldValue, depth + 2)}`,
-        `${prefix}+ ${node.key}: ${stringify(node.value, depth + 2)}`,
+        `${markerIndent}- ${node.key}: ${stringify(node.value1 ?? node.oldValue, level)}`,
+        `${markerIndent}+ ${node.key}: ${stringify(node.value2 ?? node.value, level)}`,
       ];
     case 'unchanged':
-      return `${prefix}  ${node.key}: ${stringify(node.value, depth + 2)}`;
+      return `${plainIndent}${node.key}: ${stringify(node.value, level)}`;
     case 'nested':
       return [
-        `${prefix}${node.key}: {`,
-        ...node.children.flatMap((child) => formatNode(child, depth + 1)),
-        `${prefix}}`,
+        `${plainIndent}${node.key}: {`,
+        ...node.children.flatMap((child) => formatNode(child, level + 1)),
+        `${plainIndent}}`,
       ];
     default:
       return [];
   }
 };
 
-export default function formatStylish(nodes, depth = 2) {
-  const lines = nodes.flatMap((node) => formatNode(node, depth));
-  return ['{', ...lines, indent(depth - 1) + '}'].join('\n');
+export default function formatStylish(nodes, level = 1) {
+  const lines = nodes.flatMap((node) => formatNode(node, level));
+  return ['{', ...lines, getPlainIndent(level - 1) + '}'].join('\n');
 }
