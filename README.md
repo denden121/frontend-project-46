@@ -10,11 +10,16 @@
 
 ### Использование
 
-CLI с форматом:
+
+CLI:
 ```bash
+gendiff filepath1.json filepath2.json
 gendiff --format plain filepath1.json filepath2.json
+gendiff --format json filepath1.json filepath2.json
 ```
+
+Формат **json** выдаёт диф в виде массива JSON-объектов (узлы с `key`, `type`, при необходимости `value`, `oldValue`, `children`).
 
 ### Пример работы пакета (asciinema)
 
-Пример работы утилиты: [asciinema](https://asciinema.org/a/TwV4nujK6qhrMD17)
+Пример работы утилиты: [asciinema](https://asciinema.org/a/ojiIgqxlF1nWmj0u)

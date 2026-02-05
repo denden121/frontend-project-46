@@ -85,6 +85,38 @@ describe('genDiff', () => {
     expect(result).toContain("Property 'group3' was added with value: [complex value]");
   });
 
+  test('формат json: вывод — валидный JSON, массив узлов с type, key и при необходимости value/oldValue/children', () => {
+    const filepath1 = getFixturePath('file1.json');
+    const filepath2 = getFixturePath('file2.json');
+    const result = genDiff(filepath1, filepath2, 'json');
+    expect(() => JSON.parse(result)).not.toThrow();
+    const parsed = JSON.parse(result);
+    expect(Array.isArray(parsed)).toBe(true);
+    parsed.forEach((node) => {
+      expect(node).toHaveProperty('key');
+      expect(node).toHaveProperty('type');
+      expect(['added', 'removed', 'updated', 'unchanged', 'nested']).toContain(node.type);
+    });
+    const added = parsed.find((n) => n.type === 'added' && n.key === 'verbose');
+    expect(added).toBeDefined();
+    expect(added.value).toBe(true);
+    const updated = parsed.find((n) => n.type === 'updated' && n.key === 'timeout');
+    expect(updated).toBeDefined();
+    expect(updated.oldValue).toBe(50);
+    expect(updated.value).toBe(20);
+  });
+
+  test('формат json: вложенные объекты представлены узлами с type nested и массивом children', () => {
+    const filepath1 = getFixturePath('file1_nested.json');
+    const filepath2 = getFixturePath('file2_nested.json');
+    const result = genDiff(filepath1, filepath2, 'json');
+    const parsed = JSON.parse(result);
+    const common = parsed.find((n) => n.key === 'common' && n.type === 'nested');
+    expect(common).toBeDefined();
+    expect(common.children).toBeDefined();
+    expect(Array.isArray(common.children)).toBe(true);
+  });
+
   test('неизвестный формат выбрасывает ошибку', () => {
     const filepath1 = getFixturePath('file1.json');
     const filepath2 = getFixturePath('file2.json');
