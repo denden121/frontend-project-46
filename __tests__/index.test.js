@@ -5,7 +5,7 @@ import genDiff from '../index.js'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-const getFixturePath = filename => path.join(__dirname, '..', '__fixtures__', filename)
+const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename)
 
 describe('genDiff', () => {
   const expected = `{
@@ -33,10 +33,10 @@ describe('genDiff', () => {
     const filepath1 = getFixturePath('file1.json')
     const filepath2 = getFixturePath('file2.json')
     const result = genDiff(filepath1, filepath2)
-    const lines = result.split('\n').filter(line => line.trim().length > 0)
+    const lines = result.split('\n').filter((line) => line.trim().length > 0)
     const keyOrder = lines
       .slice(1, -1)
-      .map(line => line.replace(/^[\s\-+]+/, '').split(':')[0].trim())
+      .map((line) => line.replace(/^[\s\-+]+/, '').split(':')[0].trim())
     const sorted = [...keyOrder].sort()
     expect(keyOrder).toEqual(sorted)
   })
@@ -56,7 +56,7 @@ describe('genDiff', () => {
     const filepath1 = getFixturePath('file1_nested.json')
     const filepath2 = getFixturePath('file2_nested.json')
     const result = genDiff(filepath1, filepath2, 'stylish')
-    const opsLine = result.split('\n').find(line => line.includes('ops:') && line.trim().startsWith('+'))
+    const opsLine = result.split('\n').find((line) => line.includes('ops:') && line.trim().startsWith('+'))
     expect(opsLine).toBeDefined()
     const spacesBeforePlus = opsLine.indexOf('+')
     expect(spacesBeforePlus).toBe(10)
@@ -102,15 +102,15 @@ describe('genDiff', () => {
     expect(() => JSON.parse(result)).not.toThrow()
     const parsed = JSON.parse(result)
     expect(Array.isArray(parsed)).toBe(true)
-    parsed.forEach(node => {
+    parsed.forEach((node) => {
       expect(node).toHaveProperty('key')
       expect(node).toHaveProperty('type')
       expect(['added', 'removed', 'updated', 'unchanged', 'nested']).toContain(node.type)
     })
-    const added = parsed.find(n => n.type === 'added' && n.key === 'verbose')
+    const added = parsed.find((n) => n.type === 'added' && n.key === 'verbose')
     expect(added).toBeDefined()
     expect(added.value).toBe(true)
-    const updated = parsed.find(n => n.type === 'updated' && n.key === 'timeout')
+    const updated = parsed.find((n) => n.type === 'updated' && n.key === 'timeout')
     expect(updated).toBeDefined()
     expect(updated.oldValue).toBe(50)
     expect(updated.value).toBe(20)
@@ -121,7 +121,7 @@ describe('genDiff', () => {
     const filepath2 = getFixturePath('file2_nested.json')
     const result = genDiff(filepath1, filepath2, 'json')
     const parsed = JSON.parse(result)
-    const common = parsed.find(n => n.key === 'common' && n.type === 'nested')
+    const common = parsed.find((n) => n.key === 'common' && n.type === 'nested')
     expect(common).toBeDefined()
     expect(common.children).toBeDefined()
     expect(Array.isArray(common.children)).toBe(true)
