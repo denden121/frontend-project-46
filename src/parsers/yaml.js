@@ -1,5 +1,5 @@
-import { load } from 'js-yaml';
+import { load } from 'js-yaml'
 
 export default function parse(content) {
-  return load(content);
+  return load(content)
 }

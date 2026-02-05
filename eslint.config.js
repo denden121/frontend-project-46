@@ -1,11 +1,12 @@
-import js from '@eslint/js';
-import importPlugin from 'eslint-plugin-import';
-import globals from 'globals';
+import js from '@eslint/js'
+import importPlugin from 'eslint-plugin-import'
+import stylistic from '@stylistic/eslint-plugin'
+import globals from 'globals'
 
 export default [
   js.configs.recommended,
   {
-    plugins: { import: importPlugin },
+    plugins: { import: importPlugin, '@stylistic': stylistic },
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'module',
@@ -13,6 +14,7 @@ export default [
     },
     rules: {
       ...importPlugin.configs.recommended.rules,
+      '@stylistic/semi': ['error', 'never'],
     },
   },
   {
@@ -24,4 +26,4 @@ export default [
   {
     ignores: ['node_modules/', 'coverage/'],
   },
-];
+]
