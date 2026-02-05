@@ -1,4 +1,5 @@
-const indent = (depth) => '  '.repeat(depth);
+const indentStep = 4;
+const indent = (depth) => ' '.repeat(indentStep * depth);
 
 const isObject = (value) =>
   typeof value === 'object' && value !== null;
@@ -8,8 +9,8 @@ const stringify = (value, depth) => {
     return typeof value === 'string' ? value : String(value);
   }
 
-  const currentIndent = indent(depth + 1);
-  const bracketIndent = indent(depth);
+  const currentIndent = indent(depth);
+  const bracketIndent = indent(depth - 1);
 
   const lines = Object
     .entries(value)
@@ -37,7 +38,7 @@ const formatNode = (node, depth) => {
     case 'nested':
       return [
         `${prefix}  ${node.key}: {`,
-        ...node.children.flatMap((child) => formatNode(child, depth + 2)),
+        ...node.children.flatMap((child) => formatNode(child, depth + 1)),
         `${prefix}  }`,
       ];
     default:

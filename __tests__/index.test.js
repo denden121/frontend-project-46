@@ -9,12 +9,12 @@ const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', 
 
 describe('genDiff', () => {
   const expected = `{
-  - follow: false
-    host: hexlet.io
-  - proxy: 123.234.53.22
-  - timeout: 50
-  + timeout: 20
-  + verbose: true
+    - follow: false
+      host: hexlet.io
+    - proxy: 123.234.53.22
+    - timeout: 50
+    + timeout: 20
+    + verbose: true
 }`;
 
   test('сравнивает два плоских JSON-файла и возвращает строку с дифом', () => {
@@ -45,10 +45,10 @@ describe('genDiff', () => {
     const filepath1 = getFixturePath('file1.json');
     const filepath2 = getFixturePath('file2.json');
     const result = genDiff(filepath1, filepath2);
-    expect(result).toContain('  - timeout: 50');
-    expect(result).toContain('  + timeout: 20');
-    const minusIndex = result.indexOf('  - timeout: 50');
-    const plusIndex = result.indexOf('  + timeout: 20');
+    expect(result).toContain('    - timeout: 50');
+    expect(result).toContain('    + timeout: 20');
+    const minusIndex = result.indexOf('    - timeout: 50');
+    const plusIndex = result.indexOf('    + timeout: 20');
     expect(minusIndex).toBeLessThan(plusIndex);
   });
 
