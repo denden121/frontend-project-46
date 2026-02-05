@@ -1,6 +1,6 @@
 import sortBy from 'lodash/sortBy.js'
 
-const isObject = (val) =>
+const isObject = val =>
   typeof val === 'object' && val !== null && !Array.isArray(val)
 
 const buildNode = (key, type, value, oldValue = null, children = null) => ({
@@ -14,7 +14,7 @@ const buildNode = (key, type, value, oldValue = null, children = null) => ({
 export default function buildDiff(obj1, obj2) {
   const keys = sortBy(Object.keys({ ...obj1, ...obj2 }))
 
-  return keys.map((key) => {
+  return keys.map(key => {
     const has1 = Object.hasOwn(obj1, key)
     const has2 = Object.hasOwn(obj2, key)
     const val1 = obj1[key]
