@@ -51,4 +51,43 @@ describe('genDiff', () => {
     const plusIndex = result.indexOf('  + timeout: 20');
     expect(minusIndex).toBeLessThan(plusIndex);
   });
+
+  test('по умолчанию используется формат stylish', () => {
+    const filepath1 = getFixturePath('file1.json');
+    const filepath2 = getFixturePath('file2.json');
+    expect(genDiff(filepath1, filepath2)).toBe(genDiff(filepath1, filepath2, 'stylish'));
+  });
+
+  test('формат plain: плоский вывод с полным путём свойства', () => {
+    const filepath1 = getFixturePath('file1.json');
+    const filepath2 = getFixturePath('file2.json');
+    const result = genDiff(filepath1, filepath2, 'plain');
+    expect(result).toContain("Property 'follow' was removed");
+    expect(result).toContain("Property 'proxy' was removed");
+    expect(result).toContain("Property 'timeout' was updated. From 50 to 20");
+    expect(result).toContain("Property 'verbose' was added with value: true");
+  });
+
+  test('формат plain: вложенные свойства отображаются полным путём, составные значения как [complex value]', () => {
+    const filepath1 = getFixturePath('file1_nested.json');
+    const filepath2 = getFixturePath('file2_nested.json');
+    const result = genDiff(filepath1, filepath2, 'plain');
+    expect(result).toContain("Property 'common.follow' was added with value: false");
+    expect(result).toContain("Property 'common.setting2' was removed");
+    expect(result).toContain("Property 'common.setting3' was updated. From true to null");
+    expect(result).toContain("Property 'common.setting4' was added with value: 'blah blah'");
+    expect(result).toContain("Property 'common.setting5' was added with value: [complex value]");
+    expect(result).toContain("Property 'common.setting6.doge.wow' was updated. From '' to 'so much'");
+    expect(result).toContain("Property 'common.setting6.ops' was added with value: 'vops'");
+    expect(result).toContain("Property 'group1.baz' was updated. From 'bas' to 'bars'");
+    expect(result).toContain("Property 'group1.nest' was updated. From [complex value] to 'str'");
+    expect(result).toContain("Property 'group2' was removed");
+    expect(result).toContain("Property 'group3' was added with value: [complex value]");
+  });
+
+  test('неизвестный формат выбрасывает ошибку', () => {
+    const filepath1 = getFixturePath('file1.json');
+    const filepath2 = getFixturePath('file2.json');
+    expect(() => genDiff(filepath1, filepath2, 'unknown')).toThrow('Unknown format: unknown');
+  });
 });

@@ -14,8 +14,9 @@ program
   .version(version)
   .arguments('<filepath1> <filepath2>')
   .option('-f, --format [type]', 'output format')
-  .action((filepath1, filepath2) => {
-    const diff = genDiff(filepath1, filepath2);
+  .action(function (filepath1, filepath2) {
+    const formatName = this.opts().format ?? 'stylish';
+    const diff = genDiff(filepath1, filepath2, formatName);
     console.log(diff);
   });
 

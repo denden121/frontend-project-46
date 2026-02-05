@@ -8,4 +8,13 @@
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=denden121_frontend-project-46&metric=coverage)](https://sonarcloud.io/summary/new_code?project=denden121_frontend-project-46)
 
 
-Пример работы утилиты: [asciinema](https://asciinema.org/a/y6OeCUmhkiIcWYx4)
+### Использование
+
+CLI с форматом:
+```bash
+gendiff --format plain filepath1.json filepath2.json
+```
+
+### Пример работы пакета (asciinema)
+
+Пример работы утилиты: [asciinema](https://asciinema.org/a/TwV4nujK6qhrMD17)
