@@ -1,7 +1,7 @@
 const isComplex = value =>
   typeof value === 'object' && value !== null
 
-const formatValue = value => {
+const formatValue = (value) => {
   if (isComplex(value)) return '[complex value]'
   if (typeof value === 'string') return `'${value}'`
   return String(value)
@@ -10,7 +10,7 @@ const formatValue = value => {
 const flattenNodes = (nodes, path = '') => {
   const lines = []
 
-  nodes.forEach(node => {
+  nodes.forEach((node) => {
     const fullPath = path ? `${path}.${node.key}` : node.key
 
     switch (node.type) {

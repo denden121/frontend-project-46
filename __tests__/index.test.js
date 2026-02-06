@@ -102,7 +102,7 @@ describe('genDiff', () => {
     expect(() => JSON.parse(result)).not.toThrow()
     const parsed = JSON.parse(result)
     expect(Array.isArray(parsed)).toBe(true)
-    parsed.forEach(node => {
+    parsed.forEach((node) => {
       expect(node).toHaveProperty('key')
       expect(node).toHaveProperty('type')
       expect(['added', 'removed', 'updated', 'unchanged', 'nested']).toContain(node.type)
