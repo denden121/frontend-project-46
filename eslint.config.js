@@ -15,7 +15,7 @@ export default [
     rules: {
       ...importPlugin.configs.recommended.rules,
       '@stylistic/semi': ['error', 'never'],
-      '@stylistic/arrow-parens': ['error', 'always'],
+      '@stylistic/arrow-parens': ['error', 'as-needed'],
       '@stylistic/quotes': ['error', 'single'],
       '@stylistic/brace-style': ['error', 'stroustrup'],
       '@stylistic/no-multiple-empty-lines': ['error', { max: 1 }],

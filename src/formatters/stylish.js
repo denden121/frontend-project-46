@@ -1,11 +1,11 @@
-const getMarkerIndent = (level) => ' '.repeat(level * 4 - 2)
-const getPlainIndent = (level) => ' '.repeat(level * 4)
+const getMarkerIndent = level => ' '.repeat(level * 4 - 2)
+const getPlainIndent = level => ' '.repeat(level * 4)
 
-const isObject = (value) =>
+const isObject = value =>
   typeof value === 'object' && value !== null
 
-const stringifyIndent = (level) => ' '.repeat((level + 1) * 4)
-const stringifyBracketIndent = (level) => ' '.repeat(level * 4)
+const stringifyIndent = level => ' '.repeat((level + 1) * 4)
+const stringifyBracketIndent = level => ' '.repeat(level * 4)
 
 const stringify = (value, level) => {
   if (!isObject(value)) {
@@ -42,7 +42,7 @@ const formatNode = (node, level) => {
     case 'nested':
       return [
         `${plainIndent}${node.key}: {`,
-        ...node.children.flatMap((child) => formatNode(child, level + 1)),
+        ...node.children.flatMap(child => formatNode(child, level + 1)),
         `${plainIndent}}`,
       ]
     default:
@@ -51,6 +51,6 @@ const formatNode = (node, level) => {
 }
 
 export default function formatStylish(nodes, level = 1) {
-  const lines = nodes.flatMap((node) => formatNode(node, level))
+  const lines = nodes.flatMap(node => formatNode(node, level))
   return ['{', ...lines, getPlainIndent(level - 1) + '}'].join('\n')
 }
