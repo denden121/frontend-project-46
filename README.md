@@ -20,6 +20,11 @@ gendiff --format json filepath1.json filepath2.json
 
 Формат **json** выдаёт диф в виде массива JSON-объектов (узлы с `key`, `type`, при необходимости `value`, `oldValue`, `children`).
 
-### Пример работы пакета (asciinema)
+### Примеры работы (asciinema)
 
-Пример работы утилиты: [asciinema](https://asciinema.org/a/ojiIgqxlF1nWmj0u)
+В хронологическом порядке по шагам проекта:
+
+1. **CLI и сравнение плоских JSON** — [asciinema](https://asciinema.org/a/s2Q59nLGrsr176DK)
+2. **Сравнение плоских файлов (YAML)** — [asciinema](https://asciinema.org/a/y6OeCUmhkiIcWYx4)
+3. **Формат plain** — [asciinema](https://asciinema.org/a/TwV4nujK6qhrMD17)
+4. **Формат json** — [asciinema](https://asciinema.org/a/ojiIgqxlF1nWmj0u)
